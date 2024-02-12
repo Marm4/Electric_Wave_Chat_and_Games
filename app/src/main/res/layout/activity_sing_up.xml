@@ -4,6 +4,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".auth.SignUpActivity">
+    tools:context=".auth.SignUpActivity"
+    android:background="@color/primary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="35dp"
+        >
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+
+            android:alpha="0.3"
+            android:src="@drawable/ic_electrowave"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/icon"
+            app:layout_constraintStart_toStartOf="@id/icon"
+            app:layout_constraintEnd_toEndOf="@id/icon"
+            app:layout_constraintBottom_toBottomOf="@id/icon"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/HeaderStyle"
+                android:layout_gravity="center"
+                android:text="ELEC"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/HeaderStyle"
+                android:layout_gravity="center"
+                android:text="TRIC"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/HeaderStyle"
+                android:textColor="@color/quaternary"
+                android:text="WAVE"/>
+
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <EditText
+            android:id="@+id/userNameET"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/tertiary"
+            android:text="@string/user_name"
+            android:layout_marginTop="20dp"
+            android:paddingStart="@dimen/margin_start_end"
+            style="@style/TextRegularLogIn"/>
+
+        <EditText
+            android:id="@+id/emailET"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/tertiary"
+            android:text="@string/email"
+            android:paddingStart="@dimen/margin_start_end"
+            style="@style/TextRegularLogIn"/>
+
+        <EditText
+            android:id="@+id/passwordET"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/tertiary"
+            android:text="@string/password"
+            android:paddingStart="@dimen/margin_start_end"
+            style="@style/TextRegularLogIn"/>
+
+        <EditText
+            android:id="@+id/repeatPasswordET"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/tertiary"
+            android:text="@string/repeat_password"
+            android:paddingStart="@dimen/margin_start_end"
+            style="@style/TextRegularLogIn"/>
+
+
+
+        <Button
+            android:id="@+id/singinBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            style="@style/TextBoldLogIn"
+            android:background="@color/quaternaryTransparency"
+            android:textAllCaps="false"
+            android:text="@string/singIn"
+            />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

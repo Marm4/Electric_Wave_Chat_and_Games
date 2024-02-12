@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //General
+
+    <style name="TextBoldStyle">
+        <item name="android:fontFamily">@font/SF_Bold</item>
+        <item name="android:textColor">@color/secondary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextRegularStyle">
+        <item name="android:fontFamily">@font/SF_Regular</item>
+        <item name="android:textColor">@color/secondary</item>
+    </style>
+
+
+    //LogIn
+    <style name="HeaderStyle">
+        <item name="android:fontFamily">@font/DongPora</item>
+        <item name="android:textSize">45dp</item>
+        <item name="android:textColor">@color/secondary</item>
+    </style>
+
+    <style name="TextBoldLogIn" parent="TextRegularStyle">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="TextRegularLogIn" parent="TextRegularStyle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:maxLength">50</item>
+    </style>
+
+
+
+</resources>

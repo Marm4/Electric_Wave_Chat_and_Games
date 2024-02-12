@@ -6,30 +6,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".auth.LoginActivity">
+    tools:context=".auth.LoginActivity"
+    android:background="@color/primary">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_height="wrap_content"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width = "match_parent"
-            android:layout_height = "?attr/actionBarSize" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="35dp"
+            >
 
-  </com.google.android.material.appbar.AppBarLayout>
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
 
-  <include layout="@layout/content_login"/>
+                android:alpha="0.3"
+                android:src="@drawable/ic_electrowave"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-  <com.google.android.material.floatingactionbutton.FloatingActionButton
-  android:id="@+id/fab"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:layout_gravity="bottom|end"
-  android:layout_marginEnd="@dimen/fab_margin"
-  android:layout_marginBottom="16dp"
-  app:srcCompat="@android:drawable/ic_dialog_email" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/icon"
+                app:layout_constraintStart_toStartOf="@id/icon"
+                app:layout_constraintEnd_toEndOf="@id/icon"
+                app:layout_constraintBottom_toBottomOf="@id/icon"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/HeaderStyle"
+                    android:layout_gravity="center"
+                    android:text="ELEC"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/HeaderStyle"
+                    android:layout_gravity="center"
+                    android:text="TRIC"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/HeaderStyle"
+                    android:textColor="@color/quaternary"
+                    android:text="WAVE"/>
+
+            </LinearLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextBoldLogIn"
+            android:text="@string/chat_games"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            />
+
+        <EditText
+            android:id="@+id/emailET"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/tertiary"
+            android:text="@string/email"
+            android:paddingStart="@dimen/margin_start_end"
+            style="@style/TextRegularLogIn"/>
+
+        <EditText
+            android:id="@+id/passwordET"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/tertiary"
+            android:text="@string/password"
+            android:paddingStart="@dimen/margin_start_end"
+            style="@style/TextRegularLogIn"/>
+
+        <Button
+            android:id="@+id/loginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            style="@style/TextBoldLogIn"
+            android:background="@color/quaternaryTransparency"
+            android:textAllCaps="false"
+            android:text="@string/login"
+            />
+
+        <Button
+            android:id="@+id/singInBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            style="@style/TextBoldLogIn"
+            android:background="none"
+            android:textAllCaps="false"
+            android:text="@string/singIn"
+            />
+    </LinearLayout>
+
 
   </androidx.coordinatorlayout.widget.CoordinatorLayout>
