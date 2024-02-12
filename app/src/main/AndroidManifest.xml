@@ -16,7 +16,7 @@
             android:name=".auth.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".auth.LoginActivity"
+            android:name=".auth.LogInActivity"
             android:exported="false"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.ElectricWave" />
@@ -25,7 +25,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".auth.LoginActivity"
+    tools:context=".auth.LogInActivity"
     android:background="@color/primary">
 
     <LinearLayout
@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@color/tertiary"
-            android:text="@string/email"
+            android:hint="@string/email"
             android:paddingStart="@dimen/margin_start_end"
             style="@style/TextRegularLogIn"/>
 
@@ -92,7 +92,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:background="@color/tertiary"
-            android:text="@string/password"
+            android:hint="@string/password"
             android:paddingStart="@dimen/margin_start_end"
             style="@style/TextRegularLogIn"/>
 
@@ -108,14 +108,14 @@
             />
 
         <Button
-            android:id="@+id/singInBtn"
+            android:id="@+id/singUpBtn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             style="@style/TextBoldLogIn"
-            android:background="none"
+            android:backgroundTint="@color/primary"
             android:textAllCaps="false"
-            android:text="@string/singIn"
+            android:text="@string/singUp"
             />
     </LinearLayout>
 

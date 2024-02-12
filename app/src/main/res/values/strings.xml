@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">Electric-Wave</string>
-
+    <string name="title_activity_login">title</string>
 
     //Global
 
 
-    //LogIn & SingIn
+    //LogIn and SingIn
     <string name="email">Email</string>
     <string name="password">Contraseña</string>
-    <string name="singIn">Registrarse</string>
+    <string name="singUp">Registrarse</string>
 
     <string name="elec">ELEC</string>
     <string name="tric">TRIC</string>
@@ -16,6 +16,7 @@
     <string name="chat_games">Mensajes y juegos</string>
     <string name="login">Iniciar sesión</string>
 
+    <string name="name">Nombre</string>
     <string name="user_name">Nombre de usuario</string>
     <string name="repeat_password">Repetir contraseña</string>
 
