@@ -13,15 +13,15 @@
         android:theme="@style/Theme.ElectricWave"
         tools:targetApi="31">
         <activity
-            android:name=".auth.SignUpActivity"
+            android:name=".ui.auth.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".auth.LogInActivity"
+            android:name=".ui.auth.LogInActivity"
             android:exported="false"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.ElectricWave" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

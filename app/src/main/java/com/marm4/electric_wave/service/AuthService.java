@@ -13,11 +13,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.marm4.electric_wave.MainActivity;
-import com.marm4.electric_wave.auth.LogInActivity;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.marm4.electric_wave.Interface.OnSearchUserCompleteListener;
+import com.marm4.electric_wave.ui.MainActivity;
+import com.marm4.electric_wave.ui.auth.LogInActivity;
 import com.marm4.electric_wave.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AuthService {
     private FirebaseAuth mAuth;
@@ -53,7 +61,7 @@ public class AuthService {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.i("TAG", "Sing up success");
-                            saveUserData(name, userName);
+                            saveUserData(name, userName, email);
                             redirectToActivity(MainActivity.class);
 
                         } else {
@@ -68,13 +76,13 @@ public class AuthService {
         redirectToActivity(LogInActivity.class);
     }
 
-    private void saveUserData(String name, String userName){
+    private void saveUserData(String name, String userName, String email){
         Log.i("TAG", "---Save user data---");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference usersRef = databaseReference.child("users");
 
         String userId = usersRef.push().getKey();
-        User user = new User(userId, name, userName);
+        User user = new User(userId, name, userName, email);
 
         usersRef.child(userId).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -88,6 +96,39 @@ public class AuthService {
             }
         });
     }
+
+
+    public void searchUser(String searchTerm, OnSearchUserCompleteListener listener) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+        Query query = usersRef.orderByChild("userName").startAt(searchTerm).endAt(searchTerm + "\uf8ff");
+        List<User> userList = new ArrayList<>();
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        User user = snapshot.getValue(User.class);
+                        if (user != null) {
+                            String userId = snapshot.getKey();
+                            String name = user.getName();
+                            String userName = user.getUserName();
+                            String email = user.getEmail();
+                            User foundUser = new User(userId, name, userName, email);
+                            userList.add(foundUser);
+                        }
+                    }
+                }
+                listener.onSearchUserComplete(userList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                listener.onSearchUserError("Error: " + databaseError.getMessage());
+            }
+        });
+    }
+
 
     public boolean isUserLoggedIn() {
         FirebaseUser currentUser = mAuth.getCurrentUser();

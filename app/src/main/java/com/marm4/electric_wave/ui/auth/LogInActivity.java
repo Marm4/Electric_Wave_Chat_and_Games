@@ -1,4 +1,4 @@
-package com.marm4.electric_wave.auth;
+package com.marm4.electric_wave.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.marm4.electric_wave.R;
 import com.marm4.electric_wave.controller.AuthController;
 

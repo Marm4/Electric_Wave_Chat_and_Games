@@ -4,39 +4,40 @@ import java.util.Date;
 
 public class Message {
     private String id;
-    private User sender;
+    private User currentUser;
+    private User friend;
     private String content;
     private Date timestamp;
+    private Boolean friendMessage;
+
+    public Message(String id, User receptor, User sender, String content, Date timestamp, Boolean friendMessage) {
+        this.id = id;
+        this.currentUser = sender;
+        this.friend = receptor;
+        this.content = content;
+        this.timestamp = timestamp;
+        this.friendMessage = friendMessage;
+    }
 
     public String getId() {
         return id;
     }
-
-    public void setId(String id) {
-        this.id = id;
+    public User getCurrentUser() {
+        return currentUser;
     }
 
-    public User getSender() {
-        return sender;
+    public User getFriend() {
+        return friend;
     }
-
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
     public String getContent() {
         return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public Boolean isFriendMessage() {
+        return friendMessage;
     }
 }
