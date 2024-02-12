@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "780955978649",
+    "project_id": "electric-wave-chat-and-games",
+    "storage_bucket": "electric-wave-chat-and-games.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780955978649:android:fef600086b1645f57ce108",
+        "android_client_info": {
+          "package_name": "com.marm4.electric_wave.model"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn-WSiv_oU4sFou-JJe2MWa6T7nd9DrZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
