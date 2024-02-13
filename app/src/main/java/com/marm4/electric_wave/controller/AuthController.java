@@ -2,6 +2,7 @@ package com.marm4.electric_wave.controller;
 
 import android.content.Context;
 
+import com.marm4.electric_wave.Interface.OnLoadCurrentUserCompleteListener;
 import com.marm4.electric_wave.Interface.OnSearchUserCompleteListener;
 import com.marm4.electric_wave.service.AuthService;
 
@@ -32,11 +33,11 @@ public class AuthController {
         return authService.isUserLoggedIn();
     }
 
-    public void searchUsers(String searchTerm, OnSearchUserCompleteListener listener){
-        authService.searchUser(searchTerm, listener);
+    public void searchUserByUserName(String searchTerm, OnSearchUserCompleteListener listener){
+        authService.searchUserByUserName(searchTerm, listener);
     }
 
-    public void loadCurrentUser(){
-        authService.loadCurrentUser();
+    public void loadCurrentUser(OnLoadCurrentUserCompleteListener listener){
+        authService.loadCurrentUser(listener);
     }
 }

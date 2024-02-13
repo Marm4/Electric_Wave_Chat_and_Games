@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.marm4.electric_wave.Interface.OnLoadCurrentUserCompleteListener;
 import com.marm4.electric_wave.Interface.OnSearchUserCompleteListener;
 import com.marm4.electric_wave.model.CurrentUser;
 import com.marm4.electric_wave.ui.MainActivity;
@@ -64,7 +65,7 @@ public class AuthService {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.i("TAG", "Sing up success");
-                            saveUserData(name, userName, email);
+                            saveUserData(name.toLowerCase(), userName.toLowerCase(), email.toLowerCase());
                             redirectToActivity(MainActivity.class);
 
                         } else {
@@ -103,9 +104,9 @@ public class AuthService {
     }
 
 
-    public void searchUser(String searchTerm, OnSearchUserCompleteListener listener) {
+    public void searchUserByUserName(String userName, OnSearchUserCompleteListener listener) {
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
-        Query query = usersRef.orderByChild("userName").startAt(searchTerm).endAt(searchTerm + "\uf8ff");
+        Query query = usersRef.orderByChild("userName").startAt(userName).endAt(userName + "\uf8ff");
         List<User> userList = new ArrayList<>();
         Log.i("TAG", "Searching user in database");
 
@@ -142,7 +143,7 @@ public class AuthService {
         return currentUser != null;
     }
 
-    public void loadCurrentUser(){
+    public void loadCurrentUser(OnLoadCurrentUserCompleteListener listener){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -161,10 +162,9 @@ public class AuthService {
                         String id = dataSnapshot.child("id").getValue(String.class);
                         User user = new User(userId, name, userName, email);
                         CurrentUser.getInstance().setUser(user);
-                        Log.d(TAG, "User existent");
+                        listener.onLoadCurrentUserComplete(true);
                     } else {
-                        // El usuario no existe en la base de datos
-                        Log.d(TAG, "User non-existent");
+                        listener.onLoadCurrentUserComplete(false);
                     }
                 }
 

@@ -19,4 +19,12 @@ public class FriendController {
     public void requestExist(String id, OnFriendRequestCompleteListener listener){
         friendService.requestExist(id, listener);
     }
+
+    public void getAllFriendRequests(){
+        friendService.getAllFriendRequests();
+    }
+
+    public void acceptDeleteFriend(String friendId, Boolean accept){
+        friendService.acceptDeleteFriend(friendId, accept);
+    }
 }

@@ -22,12 +22,14 @@
             app:srcCompat="@drawable/ic_profile" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:gravity="center"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/message"
+
+            app:layout_constraintEnd_toStartOf="@+id/itemContainerLayout"
             app:layout_constraintStart_toEndOf="@+id/profilePicture"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -51,36 +53,75 @@
                 android:layout_height="wrap_content"
                 android:text="@string/name"
                 app:layout_constraintBottom_toTopOf="@+id/email"
-                app:layout_constraintEnd_toStartOf="@+id/message"
                 app:layout_constraintStart_toEndOf="@+id/profilePicture" />
 
         </LinearLayout>
 
-
-        <ImageView
-            android:id="@+id/message"
-            android:layout_width="23dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:paddingTop="4dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/add"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.509"
-            app:srcCompat="@drawable/ic_chat" />
-
-        <ImageView
-            android:id="@+id/add"
-            android:layout_width="25dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
+        <LinearLayout
+            android:id="@+id/itemContainerLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.511"
-            app:srcCompat="@drawable/ic_add" />
+            app:layout_constraintVertical_bias="0.0">
+
+            <ImageView
+                android:id="@+id/message"
+                android:layout_width="23dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginEnd="24dp"
+                android:paddingTop="4dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/add"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.509"
+                app:srcCompat="@drawable/ic_chat" />
+
+            <ImageView
+                android:id="@+id/add"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.511"
+                app:srcCompat="@drawable/ic_add" />
+
+            <ImageView
+                android:id="@+id/supply"
+                android:layout_width="18dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginEnd="24dp"
+                android:paddingTop="4dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/accept"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.509"
+                app:srcCompat="@drawable/ic_supply" />
+
+            <ImageView
+                android:id="@+id/accept"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.511"
+                app:srcCompat="@drawable/ic_check" />
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

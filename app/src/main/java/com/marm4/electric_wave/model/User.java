@@ -50,4 +50,21 @@ public class User {
     public void setMessageList(List<Message> messageList) {
         this.messageList = messageList;
     }
+
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

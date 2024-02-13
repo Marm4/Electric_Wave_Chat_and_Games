@@ -18,7 +18,9 @@ import com.marm4.electric_wave.model.CurrentUser;
 import com.marm4.electric_wave.model.Message;
 import com.marm4.electric_wave.model.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SuppressLint("RestrictedApi")
@@ -75,6 +77,89 @@ public class FriendService {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 listener.onFriendRequestError("Error");
+            }
+        });
+    }
+
+    public void getAllFriendRequests() {
+        DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(CurrentUser.getInstance().getUser().getId()).child("friend-request");
+
+        currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    String requestId = requestSnapshot.getKey();
+                    String friendId = requestSnapshot.child("id").getValue(String.class);
+                    User user = new User();
+                    user.setId(friendId);
+                    CurrentUser.getInstance().getRequestList().add(user);
+                }
+                loadRequestById();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "Error fetching friend requests", databaseError.toException());
+            }
+        });
+    }
+
+    private void loadRequestById() {
+        List<User> requestList = CurrentUser.getInstance().getRequestList();
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+        Query query = usersRef.orderByChild("id");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (User user : requestList) {
+                    DataSnapshot userSnapshot = dataSnapshot.child(user.getId());
+                    if (userSnapshot.exists()) {
+                        User foundUser = userSnapshot.getValue(User.class);
+                        if (foundUser != null) {
+                            user.setName(foundUser.getName());
+                            user.setUserName(foundUser.getUserName());
+                            user.setEmail(foundUser.getEmail());
+                            Log.i("Log", "Load request success");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Manejar errores de consulta
+            }
+        });
+
+    }
+
+    public void acceptDeleteFriend(String friendId, Boolean accept) {
+        DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(CurrentUser.getInstance().getUser().getId()).child("friend-request");
+
+        currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
+                    String requestIdFriendId = requestSnapshot.child("id").getValue(String.class);
+
+                    if (requestIdFriendId.equals(friendId)) {
+                        if(accept){
+                            DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference()
+                                    .child("users").child(CurrentUser.getInstance().getUser().getId()).child("friends");
+                            friendsRef.child(friendId).setValue(true);
+                        }
+                        requestSnapshot.getRef().removeValue();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "Error accepting friend request", databaseError.toException());
             }
         });
     }

@@ -9,15 +9,15 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.marm4.electric_wave.Interface.OnLoadCurrentUserCompleteListener;
 import com.marm4.electric_wave.R;
+import com.marm4.electric_wave.controller.FriendController;
 import com.marm4.electric_wave.ui.auth.LogInActivity;
 import com.marm4.electric_wave.controller.AuthController;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView topNavView;
-    private static final long BACK_PRESS_DELAY = 2000; // Tiempo en milisegundos
-    private long backPressTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +30,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkAuth() {
         AuthController authController = new AuthController();
+
         if(!authController.isUserLoggedIn()){
             Intent intent = new Intent(MainActivity.this, LogInActivity.class);
             startActivity(intent);
         }
-        else
-            authController.loadCurrentUser();
+        else {
+            authController.loadCurrentUser(new OnLoadCurrentUserCompleteListener() {
+                @Override
+                public void onLoadCurrentUserComplete(Boolean load) {
+                    FriendController friendController = new FriendController();
+                    friendController.getAllFriendRequests();
+                }
+            });
+        }
     }
 
     private void initUI() {

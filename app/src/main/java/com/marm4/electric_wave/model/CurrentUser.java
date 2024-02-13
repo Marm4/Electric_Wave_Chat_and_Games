@@ -7,11 +7,13 @@ public class CurrentUser {
 
     private User user;
     private List<User> friendList;
+    private List<User> requestList;
 
     private static CurrentUser instance;
 
     private CurrentUser() {
         this.friendList = new ArrayList<>();
+        this.requestList = new ArrayList<>();
     }
 
     public static CurrentUser getInstance() {
@@ -33,7 +35,19 @@ public class CurrentUser {
         return friendList;
     }
 
-    public void setFriendList(List<User> friendList) {
-        this.friendList = friendList;
+    public void addFriendList(User user) {
+        friendList.add(user);
+    }
+
+    public List<User> getRequestList() {
+        return requestList;
+    }
+
+    public void addRequestList(User user) {
+        requestList.add(user);
+    }
+
+    public void deleteRequestList(User user){
+        requestList.remove(user);
     }
 }

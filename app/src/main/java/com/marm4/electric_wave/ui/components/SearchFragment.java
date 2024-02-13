@@ -51,7 +51,7 @@ public class SearchFragment extends Fragment {
                 Log.i("TAG", "--- SEARCH ACTION ----");
                 String name = searchET.getText().toString();
                 if (actionId == EditorInfo.IME_ACTION_SEND || !name.isEmpty()) {
-                    searchUsers(name);
+                    searchUsers(name.toLowerCase());
                     return true;
                 }
                 Log.i("TAG", "Bad request");
@@ -63,7 +63,7 @@ public class SearchFragment extends Fragment {
     private void searchUsers(String name){
         Log.i("TAG", "Good request, searching users");
         AuthController authController = new AuthController();
-        authController.searchUsers(name, new OnSearchUserCompleteListener() {
+        authController.searchUserByUserName(name, new OnSearchUserCompleteListener() {
             @Override
             public void onSearchUserComplete(List<User> userList) {
                 showResults(userList);
@@ -84,7 +84,6 @@ public class SearchFragment extends Fragment {
             SearchRecyclerViewAdapter adapter = new SearchRecyclerViewAdapter(userList);
             recyclerView.setAdapter(adapter);
     }
-
 
 
 }
