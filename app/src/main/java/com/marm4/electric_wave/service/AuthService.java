@@ -1,5 +1,7 @@
 package com.marm4.electric_wave.service;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -20,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.marm4.electric_wave.Interface.OnSearchUserCompleteListener;
+import com.marm4.electric_wave.model.CurrentUser;
 import com.marm4.electric_wave.ui.MainActivity;
 import com.marm4.electric_wave.ui.auth.LogInActivity;
 import com.marm4.electric_wave.model.User;
@@ -80,8 +83,10 @@ public class AuthService {
         Log.i("TAG", "---Save user data---");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference usersRef = databaseReference.child("users");
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        String userId = usersRef.push().getKey();
+        String userId = currentUser.getUid();
         User user = new User(userId, name, userName, email);
 
         usersRef.child(userId).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -102,6 +107,7 @@ public class AuthService {
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
         Query query = usersRef.orderByChild("userName").startAt(searchTerm).endAt(searchTerm + "\uf8ff");
         List<User> userList = new ArrayList<>();
+        Log.i("TAG", "Searching user in database");
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -110,11 +116,12 @@ public class AuthService {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         User user = snapshot.getValue(User.class);
                         if (user != null) {
-                            String userId = snapshot.getKey();
+                            String userId = user.getId();
                             String name = user.getName();
                             String userName = user.getUserName();
                             String email = user.getEmail();
                             User foundUser = new User(userId, name, userName, email);
+                            Log.i("TAG", "User found: userName:" + userName + "Id: " + userId );
                             userList.add(foundUser);
                         }
                     }
@@ -133,6 +140,44 @@ public class AuthService {
     public boolean isUserLoggedIn() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         return currentUser != null;
+    }
+
+    public void loadCurrentUser(){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+
+                        String name = dataSnapshot.child("name").getValue(String.class);
+                        String userName = dataSnapshot.child("userName").getValue(String.class);
+                        String email = dataSnapshot.child("email").getValue(String.class);
+                        String id = dataSnapshot.child("id").getValue(String.class);
+                        User user = new User(userId, name, userName, email);
+                        CurrentUser.getInstance().setUser(user);
+                        Log.d(TAG, "User existent");
+                    } else {
+                        // El usuario no existe en la base de datos
+                        Log.d(TAG, "User non-existent");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Ocurrió un error al acceder a la base de datos
+                    Log.e(TAG, "Error al recuperar datos del usuario", databaseError.toException());
+                }
+            });
+        } else {
+            // El usuario no está autenticado
+            Log.d(TAG, "El usuario no está autenticado");
+        }
     }
 
     private void redirectToActivity(Class<?> cls) {

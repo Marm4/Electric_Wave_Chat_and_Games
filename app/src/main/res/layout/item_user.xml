@@ -27,7 +27,7 @@
             android:orientation="vertical"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/supply"
+            app:layout_constraintEnd_toStartOf="@+id/message"
             app:layout_constraintStart_toEndOf="@+id/profilePicture"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/user_name"
                 app:layout_constraintBottom_toTopOf="@+id/name"
-                app:layout_constraintEnd_toStartOf="@+id/supply"
+                app:layout_constraintEnd_toStartOf="@+id/message"
                 app:layout_constraintHorizontal_bias="0.49"
                 app:layout_constraintStart_toEndOf="@+id/profilePicture"
                 app:layout_constraintTop_toTopOf="parent"
@@ -51,28 +51,28 @@
                 android:layout_height="wrap_content"
                 android:text="@string/name"
                 app:layout_constraintBottom_toTopOf="@+id/email"
-                app:layout_constraintEnd_toStartOf="@+id/supply"
+                app:layout_constraintEnd_toStartOf="@+id/message"
                 app:layout_constraintStart_toEndOf="@+id/profilePicture" />
 
         </LinearLayout>
 
 
         <ImageView
-            android:id="@+id/supply"
+            android:id="@+id/message"
             android:layout_width="23dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:paddingTop="4dp"
             android:layout_marginEnd="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/check"
+            app:layout_constraintEnd_toStartOf="@+id/add"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.509"
             app:srcCompat="@drawable/ic_chat" />
 
         <ImageView
-            android:id="@+id/check"
+            android:id="@+id/add"
             android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"

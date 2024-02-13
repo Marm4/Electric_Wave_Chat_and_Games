@@ -36,4 +36,7 @@ public class AuthController {
         authService.searchUser(searchTerm, listener);
     }
 
+    public void loadCurrentUser(){
+        authService.loadCurrentUser();
+    }
 }

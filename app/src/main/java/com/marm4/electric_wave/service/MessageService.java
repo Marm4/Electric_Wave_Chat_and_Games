@@ -21,11 +21,12 @@ import java.util.Map;
 
 @SuppressLint("RestrictedApi")
 public class MessageService {
+    private FirebaseDatabase database;
+    public MessageService(){
+         database = FirebaseDatabase.getInstance();
+    }
 
     public void saveMessage(Message message){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-
         Map<String, Object> messageData = new HashMap<>();
         messageData.put("content", message.getContent());
         messageData.put("timestamp", message.getTimestamp());
@@ -63,8 +64,6 @@ public class MessageService {
                             usersRef.child("messages").child(friendId).push().setValue(messageData)
                                     .addOnSuccessListener(aVoid -> Log.d(TAG, "Mensaje guardado exitosamente"))
                                     .addOnFailureListener(e -> Log.e(TAG, "Error al guardar el mensaje", e));
-                        } else {
-                            Log.e(TAG, "Error al crear el nodo del usuario", task.getException());
                         }
                     });
                 }
@@ -78,7 +77,6 @@ public class MessageService {
     }
 
     public void retrieveMessages(String currentUserId, String friendId, OnSearchMessageCompleteListener listener) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference userMessagesRef = database.getReference().child("users").child(currentUserId).child("messages").child(friendId);
 
         userMessagesRef.addListenerForSingleValueEvent(new ValueEventListener() {

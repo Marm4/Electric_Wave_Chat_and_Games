@@ -29,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkAuth() {
-        AuthController authManager = new AuthController();
-        if(!authManager.isUserLoggedIn()){
+        AuthController authController = new AuthController();
+        if(!authController.isUserLoggedIn()){
             Intent intent = new Intent(MainActivity.this, LogInActivity.class);
             startActivity(intent);
         }
+        else
+            authController.loadCurrentUser();
     }
 
     private void initUI() {
