@@ -1,7 +1,6 @@
 package com.marm4.electric_wave.controller;
 
 import com.marm4.electric_wave.Interface.OnFriendRequestCompleteListener;
-import com.marm4.electric_wave.Interface.OnSearchUserCompleteListener;
 import com.marm4.electric_wave.service.FriendService;
 
 public class FriendController {
@@ -17,14 +16,18 @@ public class FriendController {
     }
 
     public void requestExist(String id, OnFriendRequestCompleteListener listener){
-        friendService.requestExist(id, listener);
+        friendService.FriendRequestExist(id, listener);
     }
 
-    public void getAllFriendRequests(){
-        friendService.getAllFriendRequests();
+    public void getAllFriendRequests(OnFriendRequestCompleteListener listener){
+        friendService.getAllFriendRequests(listener);
     }
 
     public void acceptDeleteFriend(String friendId, Boolean accept){
         friendService.acceptDeleteFriend(friendId, accept);
+    }
+
+    public void getFriendList(OnFriendRequestCompleteListener listener){
+        friendService.getFriendList(listener);
     }
 }

@@ -23,8 +23,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.marm4.electric_wave.Interface.OnLoadCurrentUserCompleteListener;
 import com.marm4.electric_wave.Interface.OnSearchUserCompleteListener;
-import com.marm4.electric_wave.model.CurrentUser;
-import com.marm4.electric_wave.ui.MainActivity;
+import com.marm4.electric_wave.global.CurrentUser;
+import com.marm4.electric_wave.ui.main.MainActivity;
 import com.marm4.electric_wave.ui.auth.LogInActivity;
 import com.marm4.electric_wave.model.User;
 

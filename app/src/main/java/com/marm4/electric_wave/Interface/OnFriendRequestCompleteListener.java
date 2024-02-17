@@ -8,6 +8,5 @@ public interface OnFriendRequestCompleteListener {
 
     void onFriendRequestComplete(Boolean friendRequest);
 
-    void onFriendRequestError(String errorMessage);
 
 }

@@ -1,22 +1,15 @@
 package com.marm4.electric_wave.controller;
 
-import com.marm4.electric_wave.Interface.OnSearchMessageCompleteListener;
 import com.marm4.electric_wave.model.Message;
-import com.marm4.electric_wave.service.MessageService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MessageController {
 
-    private MessageService messageService;
+    public void saveMessage(){}
 
-    public MessageController() {
-        messageService = new MessageService();
-    }
+    public List<Message> getMessages(){ return null;}
 
-    public void saveMessage(Message message){
-        messageService.saveMessage(message);
-    }
 
-    public void retrieveMessage(String currentUserId, String friendId, OnSearchMessageCompleteListener listener){
-        messageService.retrieveMessages(currentUserId, friendId, listener);
-    }
 }

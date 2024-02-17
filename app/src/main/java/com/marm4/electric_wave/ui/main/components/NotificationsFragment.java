@@ -1,4 +1,4 @@
-package com.marm4.electric_wave.ui.components;
+package com.marm4.electric_wave.ui.main.components;
 
 import android.os.Bundle;
 
@@ -6,15 +6,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.marm4.electric_wave.Adapter.NotificaciontsRecyclerViewAdapter;
-import com.marm4.electric_wave.Adapter.SearchRecyclerViewAdapter;
 import com.marm4.electric_wave.R;
-import com.marm4.electric_wave.model.CurrentUser;
+import com.marm4.electric_wave.global.CurrentUser;
 import com.marm4.electric_wave.model.User;
 
 import java.util.List;

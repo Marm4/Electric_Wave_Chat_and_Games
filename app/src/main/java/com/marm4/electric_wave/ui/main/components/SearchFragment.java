@@ -1,4 +1,4 @@
-package com.marm4.electric_wave.ui.components;
+package com.marm4.electric_wave.ui.main.components;
 
 import android.os.Bundle;
 
@@ -84,6 +84,4 @@ public class SearchFragment extends Fragment {
             SearchRecyclerViewAdapter adapter = new SearchRecyclerViewAdapter(userList);
             recyclerView.setAdapter(adapter);
     }
-
-
 }

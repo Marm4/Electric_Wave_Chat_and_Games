@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/chatsFragment"
-        android:name="com.marm4.electric_wave.ui.components.ChatsFragment"
+        android:name="com.marm4.electric_wave.ui.main.components.GroupChatsFragment"
         android:label="fragment_chats"
-        tools:layout="@layout/fragment_chats" />
+        tools:layout="@layout/fragment_group_chat" />
     <fragment
         android:id="@+id/notificationsFragment"
-        android:name="com.marm4.electric_wave.ui.components.NotificationsFragment"
+        android:name="com.marm4.electric_wave.ui.main.components.NotificationsFragment"
         android:label="fragment_notifications"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.marm4.electric_wave.ui.components.ProfileFragment"
+        android:name="com.marm4.electric_wave.ui.main.components.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.marm4.electric_wave.ui.components.SearchFragment"
+        android:name="com.marm4.electric_wave.ui.main.components.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
 </navigation>

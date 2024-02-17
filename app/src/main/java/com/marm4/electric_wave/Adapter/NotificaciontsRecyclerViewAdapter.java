@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.marm4.electric_wave.R;
 import com.marm4.electric_wave.controller.FriendController;
-import com.marm4.electric_wave.model.CurrentUser;
+import com.marm4.electric_wave.global.CurrentUser;
 import com.marm4.electric_wave.model.User;
 import java.util.List;
 
@@ -73,11 +73,14 @@ public class NotificaciontsRecyclerViewAdapter  extends RecyclerView.Adapter<Not
             acceptIV.setOnClickListener(view -> {
                 friendController.acceptDeleteFriend(user.getId(), true);
                 CurrentUser.getInstance().deleteRequestList(user);
+                CurrentUser.getInstance().addFriendList(user);
+                itemView.setVisibility(View.GONE);
             });
 
             supplyIV.setOnClickListener(view -> {
                 friendController.acceptDeleteFriend(user.getId(), false);
                 CurrentUser.getInstance().deleteRequestList(user);
+                itemView.setVisibility(View.GONE);
             });
         }
     }

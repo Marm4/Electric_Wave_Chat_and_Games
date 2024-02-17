@@ -1,7 +1,5 @@
 package com.marm4.electric_wave.Adapter;
 
-import android.location.GnssAntennaInfo;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.core.Tag;
 import com.marm4.electric_wave.Interface.OnFriendRequestCompleteListener;
-import com.marm4.electric_wave.Interface.OnSearchUserCompleteListener;
 import com.marm4.electric_wave.R;
 import com.marm4.electric_wave.controller.FriendController;
-import com.marm4.electric_wave.model.CurrentUser;
+import com.marm4.electric_wave.global.CurrentUser;
 import com.marm4.electric_wave.model.User;
 
 import java.util.List;
@@ -68,9 +66,16 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
         }
 
         private void loadData(User user, Boolean requestExist) {
-            if(!requestExist)
+            List<User> friends = CurrentUser.getInstance().getFriendList();
+            Boolean isFriend = false;
+            for(User userAux : friends){
+                if(userAux.getId().equals(user.getId()))
+                    isFriend = true;
+            }
+            if(!requestExist && !isFriend)
                 addIV.setOnClickListener(view -> {
                     friendController.sendFriendRequest(user.getId());
+                    addIV.setVisibility(View.GONE);
                 });
             else{
                 addIV.setVisibility(View.GONE);
@@ -85,13 +90,9 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
                 @Override
                 public void onFriendRequestComplete(Boolean friendRequest) {
                     loadData(user, friendRequest);
+
                 }
 
-                @Override
-                public void onFriendRequestError(String errorMessage) {
-                    Log.i("TAG", "Error: " + errorMessage);
-                    loadData(user, false);
-                }
             });
         }
     }

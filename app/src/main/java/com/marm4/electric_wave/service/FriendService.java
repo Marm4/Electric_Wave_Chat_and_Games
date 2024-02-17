@@ -14,11 +14,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.marm4.electric_wave.Interface.OnFriendRequestCompleteListener;
-import com.marm4.electric_wave.model.CurrentUser;
-import com.marm4.electric_wave.model.Message;
+import com.marm4.electric_wave.global.CurrentUser;
 import com.marm4.electric_wave.model.User;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +58,7 @@ public class FriendService {
         });
     }
 
-    public void requestExist(String id, OnFriendRequestCompleteListener listener){
+    public void FriendRequestExist(String id, OnFriendRequestCompleteListener listener){
         DatabaseReference usersRef = database.getReference().child("users").child(id);
         DatabaseReference friendRequestsRef = usersRef.child("friend-request");
 
@@ -74,14 +72,16 @@ public class FriendService {
                     listener.onFriendRequestComplete(false);
                 }
             }
+
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                listener.onFriendRequestError("Error");
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
+
         });
     }
 
-    public void getAllFriendRequests() {
+    public void getAllFriendRequests(OnFriendRequestCompleteListener listener) {
         DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(CurrentUser.getInstance().getUser().getId()).child("friend-request");
 
@@ -95,7 +95,7 @@ public class FriendService {
                     user.setId(friendId);
                     CurrentUser.getInstance().getRequestList().add(user);
                 }
-                loadRequestById();
+                loadFriendById(CurrentUser.getInstance().getRequestList(), listener);
             }
 
             @Override
@@ -103,36 +103,6 @@ public class FriendService {
                 Log.e(TAG, "Error fetching friend requests", databaseError.toException());
             }
         });
-    }
-
-    private void loadRequestById() {
-        List<User> requestList = CurrentUser.getInstance().getRequestList();
-        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
-
-        Query query = usersRef.orderByChild("id");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (User user : requestList) {
-                    DataSnapshot userSnapshot = dataSnapshot.child(user.getId());
-                    if (userSnapshot.exists()) {
-                        User foundUser = userSnapshot.getValue(User.class);
-                        if (foundUser != null) {
-                            user.setName(foundUser.getName());
-                            user.setUserName(foundUser.getUserName());
-                            user.setEmail(foundUser.getEmail());
-                            Log.i("Log", "Load request success");
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Manejar errores de consulta
-            }
-        });
-
     }
 
     public void acceptDeleteFriend(String friendId, Boolean accept) {
@@ -163,5 +133,62 @@ public class FriendService {
             }
         });
     }
+
+    public void getFriendList(OnFriendRequestCompleteListener listener){
+        Log.i("Tag", " ok");
+        DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(CurrentUser.getInstance().getUser().getId())
+                .child("friends");
+        currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot requestSnapshot : snapshot.getChildren()){
+                    User user = new User();
+                    String userId = requestSnapshot.getKey();
+                    user.setId(userId);
+                    CurrentUser.getInstance().addFriendList(user);
+                    Log.i("Tag", " FriendID: "  + requestSnapshot.getKey());
+                }
+                loadFriendById(CurrentUser.getInstance().getFriendList(), listener);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+    private void loadFriendById(List<User> requestList, OnFriendRequestCompleteListener listener) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+        Query query = usersRef.orderByChild("id");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (User user : requestList) {
+                    DataSnapshot userSnapshot = dataSnapshot.child(user.getId());
+                    if (userSnapshot.exists()) {
+                        User foundUser = userSnapshot.getValue(User.class);
+                        if (foundUser != null) {
+                            user.setName(foundUser.getName());
+                            user.setUserName(foundUser.getUserName());
+                            user.setEmail(foundUser.getEmail());
+                            Log.i("Log", "Load request success");
+                        }
+                    }
+                }
+                listener.onFriendRequestComplete(true);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Manejar errores de consulta
+            }
+        });
+
+    }
+
 }
 

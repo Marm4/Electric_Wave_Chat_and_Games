@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto"
+   >
+
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:layout_height="2dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="2dp"
+            android:id="@+id/imageView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            android:translationX="-25dp"
+            />
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/first" >
+        <Constraint
+            android:layout_height="2dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="2dp"
+            android:id="@+id/imageView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            android:translationX="155dp" />
+    </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/start"
+        motion:constraintSetEnd="@+id/first"
+        motion:autoTransition="animateToEnd"
+        motion:motionInterpolator="linear"
+        motion:duration="200"
+        >
+        <OnSwipe />
+    </Transition>
+    <ConstraintSet android:id="@+id/second" >
+        <Constraint
+            android:layout_height="2dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="2dp"
+            android:id="@+id/imageView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            android:translationX="165dp"
+            android:translationY="-40dp"
+            android:repeatCount="10"
+            android:repeatMode="restart"
+            />
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/third">
+    <Constraint
+        android:layout_height="2dp"
+        motion:layout_constraintTop_toTopOf="parent"
+        motion:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="2dp"
+        android:id="@+id/imageView"
+        motion:layout_constraintEnd_toEndOf="parent"
+        motion:layout_constraintStart_toStartOf="parent"
+        motion:layout_constraintHorizontal_bias="0.0"
+        android:translationX="185dp"
+        android:translationY="40dp"/>
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/fourth" >
+        <Constraint
+            android:layout_height="2dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="2dp"
+            android:id="@+id/imageView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            android:translationX="195dp"
+            android:translationY="0dp"/>
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/fifth" >
+        <Constraint
+            android:layout_height="2dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="2dp"
+            android:id="@+id/imageView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            android:translationX="205dp"
+            android:translationY="0dp"/>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/six">
+    <Constraint
+        android:layout_height="2dp"
+        motion:layout_constraintTop_toTopOf="parent"
+        motion:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="2dp"
+        android:id="@+id/imageView"
+        motion:layout_constraintEnd_toEndOf="parent"
+        motion:layout_constraintStart_toStartOf="parent"
+        motion:layout_constraintHorizontal_bias="0.0"
+        android:translationX="215dp"
+        android:translationY="-20dp"/>
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/seven" >
+        <Constraint
+            android:layout_height="2dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="2dp"
+            android:id="@+id/imageView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            android:translationX="225dp"
+            android:translationY="20dp"/>
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/eight" >
+        <Constraint
+            android:layout_height="2dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="2dp"
+            android:id="@+id/imageView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            android:translationX="235dp"
+            android:translationY="0dp"/>
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/nine">
+    <Constraint
+        android:layout_height="2dp"
+        motion:layout_constraintTop_toTopOf="parent"
+        motion:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="2dp"
+        android:id="@+id/imageView"
+        motion:layout_constraintEnd_toEndOf="parent"
+        motion:layout_constraintStart_toStartOf="parent"
+        motion:layout_constraintHorizontal_bias="0.0"
+        android:translationX="450dp"
+        android:translationY="0dp"/>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/ten">
+        <Constraint
+            android:layout_height="0.000000000000000000000000000000001dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="0.000000000000000000000000000000001dp"
+            android:id="@+id/imageView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            android:translationX="450dp"
+            android:translationY="0dp"
+            android:visibility="gone"/>
+    </ConstraintSet>
+
+    <Transition
+        motion:constraintSetStart="@+id/first"
+        motion:constraintSetEnd="@+id/second"
+        motion:autoTransition="animateToEnd"
+        motion:motionInterpolator="linear"
+        motion:duration="200" />
+    <Transition
+        motion:constraintSetStart="@+id/second"
+        motion:constraintSetEnd="@+id/third"
+        motion:autoTransition="animateToEnd"
+        motion:duration="150" />
+    <Transition
+        motion:constraintSetStart="@+id/third"
+        motion:constraintSetEnd="@+id/fourth"
+        motion:autoTransition="animateToEnd"
+        motion:duration="150" />
+    <Transition
+        motion:constraintSetStart="@+id/fourth"
+        motion:constraintSetEnd="@+id/fifth"
+        motion:autoTransition="animateToEnd"
+        motion:duration="150" />
+
+    <Transition
+        motion:constraintSetStart="@+id/fifth"
+        motion:constraintSetEnd="@+id/six"
+        motion:autoTransition="animateToEnd"
+        motion:duration="150" />
+    <Transition
+        motion:constraintSetStart="@+id/six"
+        motion:constraintSetEnd="@+id/seven"
+        motion:autoTransition="animateToEnd"
+        motion:duration="150" />
+    <Transition
+        motion:constraintSetStart="@+id/seven"
+        motion:constraintSetEnd="@+id/eight"
+        motion:autoTransition="animateToEnd"
+        motion:duration="150" />
+    <Transition
+        motion:constraintSetStart="@+id/eight"
+        motion:constraintSetEnd="@+id/nine"
+        motion:autoTransition="animateToEnd"
+        motion:duration="150"
+        />
+
+    <Transition
+        motion:constraintSetStart="@+id/nine"
+        motion:constraintSetEnd="@+id/ten"
+        motion:autoTransition="animateToEnd"
+        motion:duration="100"
+        />
+    <Transition
+        motion:constraintSetStart="@+id/ten"
+        motion:constraintSetEnd="@+id/start"
+        motion:autoTransition="jumpToEnd"
+        motion:duration="1"
+        />
+
+
+</MotionScene>
