@@ -1,12 +1,15 @@
 package com.marm4.electric_wave.model;
 
-import java.util.List;
+import android.net.Uri;
 
 public class User {
     private String id;
     private String name;
     private String userName;
     private String email;
+    private String profilePictureUrl;
+    private Uri profilePicture;
+    private long lastUpdate;
 
 
 
@@ -17,11 +20,13 @@ public class User {
         this.email = email;
     }
 
-    public User(String id, String name, String userName, String email, List<Message> messageList){
+    public User(String id, String name, String userName, String email, String profilePictureUrl, long lastUpdate){
         this.id = id;
         this.name = name;
         this.userName = userName;
         this.email = email;
+        this.profilePictureUrl = profilePictureUrl;
+        this.lastUpdate = lastUpdate;
     }
 
     public User() {
@@ -56,5 +61,29 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+        this.profilePictureUrl = profilePictureUrl;
+    }
+
+    public void setProfilePicture(Uri profilePicture){
+        this.profilePicture = profilePicture;
+    }
+
+    public Uri getProfilePicture(){
+        return this.profilePicture;
+    }
+
+    public long getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }

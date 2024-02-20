@@ -1,8 +1,11 @@
 package com.marm4.electric_wave.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.Date;
 
-public class Message {
+@IgnoreExtraProperties
+public class Message{
     private String id;
     private String senderId;
     private String receptorId;
@@ -18,7 +21,7 @@ public class Message {
     }
 
     public Message(String senderId, String receptorId, String content, Date timestamp) {
-        this.id = id;
+        this.id = "null";
         this.senderId = senderId;
         this.receptorId = receptorId;
         this.content = content;
@@ -47,5 +50,22 @@ public class Message {
     public Date getTimestamp() {
         return timestamp;
     }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public void setReceptorId(String receptorId) {
+        this.receptorId = receptorId;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
 
 }

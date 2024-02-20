@@ -22,11 +22,11 @@ import java.util.List;
 
 public class GroupChatRecyclerViewAdapter extends RecyclerView.Adapter<GroupChatRecyclerViewAdapter.ViewHolder> {
 
-    private List<User> requestList;
+    private List<User> userList;
     private OnChatCompleteListener listener;
 
     public GroupChatRecyclerViewAdapter(List<User> userList, OnChatCompleteListener listener) {
-        this.requestList = userList;
+        this.userList = userList;
         this.listener = listener;
     }
 
@@ -39,20 +39,32 @@ public class GroupChatRecyclerViewAdapter extends RecyclerView.Adapter<GroupChat
 
     @Override
     public void onBindViewHolder(@NonNull GroupChatRecyclerViewAdapter.ViewHolder holder, int position) {
-        User user = requestList.get(position);
-        holder.bind(user, listener);
+        if(userList!=null){
+            User user = userList.get(position);
+            holder.bind(user, listener);
+        }
+
+    }
+
+    public void setList(List<User> userList){
+        this.userList = userList;
     }
 
     @Override
     public int getItemCount() {
-        Log.i("Tag", "List size: " + requestList.size());
-        return requestList.size();
+        if(userList!=null){
+            Log.i("Tag", "List size: " + userList.size());
+            return userList.size();
+        }
+       else
+           return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView userNameTV;
         private TextView lastMessageTV;
+        private ImageView profilePictureIV;
         private ImageView addIV;
         private ImageView messageIV;
         private ImageView acceptIV;
@@ -69,6 +81,7 @@ public class GroupChatRecyclerViewAdapter extends RecyclerView.Adapter<GroupChat
             messageIV = itemView.findViewById(R.id.message);
             acceptIV = itemView.findViewById(R.id.accept);
             supplyIV = itemView.findViewById(R.id.supply);
+            profilePictureIV = itemView.findViewById(R.id.profilePicture);
 
             addIV.setVisibility(View.GONE);
             messageIV.setVisibility(View.GONE);
@@ -78,6 +91,7 @@ public class GroupChatRecyclerViewAdapter extends RecyclerView.Adapter<GroupChat
 
 
         public void bind(User user, OnChatCompleteListener listener) {
+            Log.i("GroupChatRecyclerViewAdapter", "ChatGroup for: " + user.getUserName());
             userNameTV.setText(user.getUserName());
             lastMessageTV.setText(lastMessage(user));
 
@@ -87,6 +101,9 @@ public class GroupChatRecyclerViewAdapter extends RecyclerView.Adapter<GroupChat
         }
 
         private String lastMessage(User user){
+            Log.i("GroupChatRecyclerViewAdapter", "Getting last message");
+            if(user.getProfilePicture()!=null)
+                profilePictureIV.setImageURI(user.getProfilePicture());
             List<GroupChat> groupChats = CurrentUser.getInstance().getChatGroupList();
             String lastMessage = "";
             for(GroupChat chat : groupChats){
@@ -99,6 +116,7 @@ public class GroupChatRecyclerViewAdapter extends RecyclerView.Adapter<GroupChat
                         if (timestamp.after(latestTimestamp)) {
                             latestTimestamp = timestamp;
                             lastMessage = message.getContent();
+                            Log.i("GroupChatRecyclerViewAdapter", "Last message: " + lastMessage);
                         }
                     }
                 }

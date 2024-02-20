@@ -1,9 +1,12 @@
 package com.marm4.electric_wave.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupChat {
+@IgnoreExtraProperties
+public class GroupChat{
     private String id;
     private List<User> members;
     private List<Message> messages;
@@ -36,5 +39,10 @@ public class GroupChat {
 
     public void addMessages(Message message) {
         this.messages.add(message);
+    }
+
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 }

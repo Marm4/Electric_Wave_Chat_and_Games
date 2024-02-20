@@ -40,7 +40,7 @@ public class GroupChatsFragment extends Fragment {
     private List<GroupChat> chats;
     private User currentUser;
     private View root;
-    private View container;
+    private GroupChatRecyclerViewAdapter adapter;
 
     public GroupChatsFragment() {
     }
@@ -54,11 +54,11 @@ public class GroupChatsFragment extends Fragment {
     }
 
     private void initUI() {
+        Log.i("GroupChatsFragment ", "Init view");
         searchET = root.findViewById(R.id.search);
         sendIV = root.findViewById(R.id.send);
         chats = CurrentUser.getInstance().getChatGroupList();
         currentUser = CurrentUser.getInstance().getUser();
-
 
         sendIV.setOnClickListener(view -> {
             String name = searchET.getText().toString().toLowerCase();
@@ -67,6 +67,11 @@ public class GroupChatsFragment extends Fragment {
             }
         });
 
+        addUserChatsToList();
+
+    }
+
+    private void addUserChatsToList() {
         if(!chats.isEmpty()){
             List<User> userChats = new ArrayList<>();
             for(GroupChat chat : chats){
@@ -76,12 +81,14 @@ public class GroupChatsFragment extends Fragment {
                     }
                 }
             }
-            if(!userChats.isEmpty())
-                showResults(userChats);
+            initRV(userChats);
         }
+        else
+            initRV(null);
     }
 
     private void searchGroupChat(String name) {
+        Log.i("GroupChatsFragment ", "Searching groupChat for: " + name);
         List<User> usersFriend = CurrentUser.getInstance().getFriendList();
         List<User> usersFound = new ArrayList<>();
 
@@ -94,7 +101,6 @@ public class GroupChatsFragment extends Fragment {
                 }
             }
         }
-
         if(!usersFriend.isEmpty()){
             for (User user : usersFriend){
                 if((user.getName().contains(name) || user.getUserName().contains(name)) && !usersFound.contains(user))
@@ -102,18 +108,20 @@ public class GroupChatsFragment extends Fragment {
             }
         }
 
-        showResults(usersFound);
+        adapter.setList(usersFound);
     }
 
-    private void showResults(List<User> usersFound){
+    private void initRV(List<User> userChats){
+        Log.i("GroupChatsFragment ", "InitRV");
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        GroupChatRecyclerViewAdapter adapter = new GroupChatRecyclerViewAdapter(usersFound, new OnChatCompleteListener() {
+        adapter = new GroupChatRecyclerViewAdapter(userChats, new OnChatCompleteListener() {
             @Override
             public void onChatClickListener(User user) {
                 CurrentChat.getInstance().setUser(user);
                 searchChat(user);
+                Log.i("GroupChatsFragment ", "Going to chat with: " + user.getUserName());
                 goToChat();
             }
         });
@@ -121,24 +129,34 @@ public class GroupChatsFragment extends Fragment {
     }
 
     private void searchChat(User user) {
+        Log.i("GroupChatsFragment ", "Searching chat with: " + user.getUserName());
         List<GroupChat> chats = CurrentUser.getInstance().getChatGroupList();
+
         GroupChat chat = null;
         for(GroupChat chatAux : chats){
             List<User> users = chatAux.getMembers();
             for (User userAux : users){
-                if(userAux.equals(user) && !user.equals(currentUser)){
+                if(userAux.equals(user) && !user.equals(currentUser) && chats.contains(chatAux)){
                     chat = chatAux;
+
                 }
             }
         }
 
+        setChat(chat, user);
+    }
+
+    private void setChat(GroupChat chat, User user) {
         if(chat == null){
+            Log.i("GroupChatsFragment ", "Chat no exist");
             chat = new GroupChat();
             chat.addMembers(user);
             chat.addMembers(currentUser);
+            CurrentChat.getInstance().setGroupChat(chat);
             saveChat(chat);
         }
-        CurrentChat.getInstance().setGroupChat(chat);
+        else
+            CurrentChat.getInstance().setGroupChat(chat);
     }
 
     private void saveChat(GroupChat chat) {

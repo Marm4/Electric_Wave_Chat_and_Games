@@ -1,8 +1,11 @@
 package com.marm4.electric_wave.global;
 
+import android.net.Uri;
+
 import com.marm4.electric_wave.model.GroupChat;
 import com.marm4.electric_wave.model.User;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +16,8 @@ public class CurrentUser {
     private List<User> requestList;
     private List<GroupChat> chatGroupList;
     private static CurrentUser instance;
+
+
 
     private CurrentUser() {
         this.friendList = new ArrayList<>();
@@ -40,7 +45,8 @@ public class CurrentUser {
     }
 
     public void addFriendList(User user) {
-        friendList.add(user);
+        if(!friendList.contains(user))
+            friendList.add(user);
     }
 
     public List<User> getRequestList() {
@@ -48,7 +54,8 @@ public class CurrentUser {
     }
 
     public void addRequestList(User user) {
-        requestList.add(user);
+        if(!requestList.contains(user))
+            requestList.add(user);
     }
 
     public void deleteRequestList(User user){
@@ -56,7 +63,8 @@ public class CurrentUser {
     }
 
     public void addChatGroupList(GroupChat chat){
-        chatGroupList.add(chat);
+        if(!chatGroupList.contains(chat))
+            chatGroupList.add(chat);
     }
 
     public List<GroupChat> getChatGroupList(){
@@ -79,4 +87,12 @@ public class CurrentUser {
     public Boolean containsFriendList(User user){
         return friendList.contains(user);
     }
+
+    public void destroy(){
+        user = null;
+        friendList = null;
+        requestList = null;
+        chatGroupList = null;
+    }
+
 }

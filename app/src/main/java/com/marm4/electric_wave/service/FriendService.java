@@ -3,6 +3,9 @@ package com.marm4.electric_wave.service;
 import static androidx.fragment.app.FragmentManager.TAG;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,9 +17,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.marm4.electric_wave.Interface.OnFriendRequestCompleteListener;
+import com.marm4.electric_wave.Interface.OnProfilePictureCompleteListener;
 import com.marm4.electric_wave.global.CurrentUser;
 import com.marm4.electric_wave.model.User;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +38,7 @@ public class FriendService {
 
     public void sendFriendRequest(String id) {
         DatabaseReference usersRef = database.getReference().child("users").child(id);
-
+        Log.i("FriendService", "Sending friend request...");
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -44,16 +49,16 @@ public class FriendService {
                 DatabaseReference friendRequestRef = usersRef.child("friend-request").push();
                 friendRequestRef.setValue(friendRequest)
                         .addOnSuccessListener(aVoid -> {
-                            Log.d(TAG, "Friend request sent");
+                            Log.i("FriendService", "Succes, friend request to: " + id);
                         })
                         .addOnFailureListener(e -> {
-                            Log.e(TAG, "Friend request non-sent", e);
+                            Log.i("FriendService", "Fail friend request");
                         });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Error ", databaseError.toException());
+                Log.i("FriendService", "Error on friend request: " + databaseError.getMessage());
             }
         });
     }
@@ -67,15 +72,17 @@ public class FriendService {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    Log.i("FriendService", "Friend request exist");
                     listener.onFriendRequestComplete(true);
                 } else {
+                    Log.i("FriendService", "Friend request no exist");
                     listener.onFriendRequestComplete(false);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.i("FriendService", "Error: " + error.getMessage());
             }
 
         });
@@ -89,18 +96,18 @@ public class FriendService {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
-                    String requestId = requestSnapshot.getKey();
                     String friendId = requestSnapshot.child("id").getValue(String.class);
                     User user = new User();
                     user.setId(friendId);
-                    CurrentUser.getInstance().getRequestList().add(user);
+                    Log.i("FriendService", "Find friend request: " + friendId);
+                    CurrentUser.getInstance().addRequestList(user);
                 }
                 loadFriendById(CurrentUser.getInstance().getRequestList(), listener);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Error fetching friend requests", databaseError.toException());
+                Log.i("FriendService", "Error: " + databaseError.getMessage());
             }
         });
     }
@@ -114,13 +121,16 @@ public class FriendService {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot requestSnapshot : dataSnapshot.getChildren()) {
                     String requestIdFriendId = requestSnapshot.child("id").getValue(String.class);
-
+                    Log.i("FriendService", "Friend request accept or delete: ");
                     if (requestIdFriendId.equals(friendId)) {
                         if(accept){
+                            Log.i("FriendService", "Accept, new friend: " + friendId);
                             DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference()
                                     .child("users").child(CurrentUser.getInstance().getUser().getId()).child("friends");
                             friendsRef.child(friendId).setValue(true);
                         }
+                        else
+                            Log.i("FriendService", "Delete, no new friend");
                         requestSnapshot.getRef().removeValue();
                         break;
                     }
@@ -129,13 +139,12 @@ public class FriendService {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Error accepting friend request", databaseError.toException());
+                Log.i("FriendService", "Error: " + databaseError.getMessage());
             }
         });
     }
 
     public void getFriendList(OnFriendRequestCompleteListener listener){
-        Log.i("Tag", " ok");
         DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(CurrentUser.getInstance().getUser().getId())
                 .child("friends");
@@ -147,7 +156,7 @@ public class FriendService {
                     String userId = requestSnapshot.getKey();
                     user.setId(userId);
                     CurrentUser.getInstance().addFriendList(user);
-                    Log.i("Tag", " FriendID: "  + requestSnapshot.getKey());
+                    Log.i("FriendService", "Go to loadFriendById...");
                 }
                 loadFriendById(CurrentUser.getInstance().getFriendList(), listener);
             }
@@ -175,7 +184,8 @@ public class FriendService {
                             user.setName(foundUser.getName());
                             user.setUserName(foundUser.getUserName());
                             user.setEmail(foundUser.getEmail());
-                            Log.i("Log", "Load request success");
+                            user.setProfilePictureUrl(foundUser.getProfilePictureUrl());
+                            Log.i("FriendService", "Friend found, userName: " + user.getUserName() + " id: " + user.getId());
                         }
                     }
                 }
@@ -184,11 +194,11 @@ public class FriendService {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Manejar errores de consulta
             }
         });
 
     }
+
 
 }
 

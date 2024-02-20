@@ -1,5 +1,6 @@
 package com.marm4.electric_wave.Adapter;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.marm4.electric_wave.R;
 import com.marm4.electric_wave.controller.FriendController;
 import com.marm4.electric_wave.global.CurrentUser;
 import com.marm4.electric_wave.model.User;
+import com.marm4.electric_wave.utility.DownloaderUtility;
 
 import java.util.List;
 
@@ -23,32 +25,42 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
 
     private List<User> userList;
 
-    public SearchRecyclerViewAdapter(List<User> userList) {
-        this.userList = userList;
+    public SearchRecyclerViewAdapter() {
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.i("TAG", "--- SEARCH RECYCLER VIEW ---");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = userList.get(position);
-        Log.i("TAG", "Item count: " + getItemCount());
-        holder.bind(user);
+        if(userList!=null){
+            User user = userList.get(position);
+            holder.bind(user);
+        }
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setList(List<User> list) {
+        userList = list;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        if(userList==null)
+            return 0;
+        else
+            return userList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        private ImageView profilePictureIV;
         private TextView nameTV;
         private TextView userNameTV;
         private ImageView addIV;
@@ -61,11 +73,13 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
             userNameTV = itemView.findViewById(R.id.userName);
             addIV = itemView.findViewById(R.id.add);
             messageIV = itemView.findViewById(R.id.message);
+            profilePictureIV = itemView.findViewById(R.id.profilePicture);
             friendController = new FriendController();
 
         }
 
         private void loadData(User user, Boolean requestExist) {
+            Log.i("SearchRecyclerViewAdapter", "Loading data...");
             List<User> friends = CurrentUser.getInstance().getFriendList();
             Boolean isFriend = false;
             for(User userAux : friends){
@@ -86,13 +100,13 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecycl
         }
 
         public void bind(User user) {
+            Log.i("SearchRecyclerViewAdapter", "Setting view for: " + user.getUserName());
+            profilePictureIV.setImageURI(user.getProfilePicture());
             friendController.requestExist(user.getId(), new OnFriendRequestCompleteListener() {
                 @Override
                 public void onFriendRequestComplete(Boolean friendRequest) {
                     loadData(user, friendRequest);
-
                 }
-
             });
         }
     }

@@ -35,4 +35,9 @@ public class CurrentChat {
     public static void setInstance(CurrentChat instance) {
         CurrentChat.instance = instance;
     }
+
+    public void destroy(){
+        user = null;
+        groupChat = null;
+    }
 }

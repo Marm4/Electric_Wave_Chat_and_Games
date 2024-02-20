@@ -47,19 +47,19 @@
                     android:layout_height="wrap_content"
                     style="@style/HeaderStyle"
                     android:layout_gravity="center"
-                    android:text="ELEC"/>
+                    android:text="@string/elec"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/HeaderStyle"
                     android:layout_gravity="center"
-                    android:text="TRIC"/>
+                    android:text="@string/tric"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/HeaderStyle"
                     android:textColor="@color/quaternary"
-                    android:text="WAVE"/>
+                    android:text="@string/wave"/>
 
             </LinearLayout>
 
